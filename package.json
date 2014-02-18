@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "merge": "~1.1.2",
-    "starbound-files": "~0.5.0",
+    "starbound-files": "~0.6.0",
     "workerproxy": "~0.1.3"
   }
 }

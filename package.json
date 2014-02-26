@@ -16,5 +16,8 @@
     "merge": "~1.1.2",
     "starbound-files": "~0.6.3",
     "workerproxy": "~0.1.3"
+  },
+  "peerDependencies": {
+    "starbound-assets": "~0.5.0"
   }
 }

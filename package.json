@@ -1,6 +1,6 @@
 {
   "name": "starbound-world",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Library for rendering a Starbound world onto screen.",
   "author": "Blixt <me@blixt.org>",
   "license": "MIT",

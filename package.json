@@ -18,6 +18,6 @@
     "workerproxy": "~0.1.5"
   },
   "peerDependencies": {
-    "starbound-assets": "~0.7.0"
+    "starbound-assets": "~0.7.1"
   }
 }

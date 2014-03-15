@@ -1,15 +1,31 @@
 var World = require('starbound-files').World;
 var workerproxy = require('workerproxy');
 
-var metadata, world;
+// Keep open worlds in a map, identified by a handle.
+var worlds = {},
+    nextHandle = 1;
 
 workerproxy({
-  getRegion: function (x, y, callback) {
-    if (!world) {
-      throw new Error('A world has to be opened before getting regions.');
+  close: function (handle, callback) {
+    handle = handle.toString();
+    if (!(handle in worlds)) {
+      throw new Error('The specified world is not open.');
     }
 
-    // TODO: Cache regions.
+    // TODO: Is there any clean up that could be done on the world or should we
+    //       just rely on the GC?
+    delete worlds[handle];
+    callback(null);
+  },
+
+  getRegion: function (handle, x, y, callback) {
+    handle = handle.toString();
+    if (!(handle in worlds)) {
+      throw new Error('The specified world is not open.');
+    }
+
+    var world = worlds[handle].world;
+
     var buffer = world.getRegionData(1, x, y),
         entities = world.getEntities(x, y);
 
@@ -18,13 +34,14 @@ workerproxy({
   },
 
   open: function (file, callback) {
-    if (world) {
-      throw new Error('A world has already been opened.');
-    }
+    // Open the world and get its metadata.
+    var world = World.open(file),
+        metadata = world.getMetadata();
 
-    world = World.open(file);
-    metadata = world.getMetadata();
+    // Store the world in the worlds map.
+    var handle = nextHandle++;
+    worlds[handle] = {world: world};
 
-    callback(null, metadata);
+    callback(null, {handle: handle, metadata: metadata});
   }
 }, {catchErrors: true});

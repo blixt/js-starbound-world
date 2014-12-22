@@ -13,7 +13,7 @@
     "url": "https://github.com/blixt/js-starbound-world.git"
   },
   "dependencies": {
-    "merge": "~1.1.2",
+    "merge": "^1.2.0",
     "starbound-files": "~0.7.0",
     "workerproxy": "~0.3.0"
   },
